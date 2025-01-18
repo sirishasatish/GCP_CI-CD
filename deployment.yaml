@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworldapi-deployment
+  labels:
+    app: helloworldapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: helloworldapi
+  template:
+    metadata:
+      labels:
+        app: helloworldapi
+    spec:
+      containers:
+      - name: helloworldapi
+        image: us-central1-docker.pkg.dev/gcp-ci-cd-project/ci-cd-repo/helloworldapi:v1
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworldapi-lb
+spec:
+  selector:
+    app: helloworldapi
+  ports:
+    - protocol: TCP
+      port: 80         
+      targetPort: 8080  
+  type: LoadBalancer  
