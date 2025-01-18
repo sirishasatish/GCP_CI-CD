@@ -15,9 +15,9 @@ terraform {
 
 # Configure the Google Cloud provider
 provider "google" {
-  project = "gcp-ci-cd-project" # Replace with your GCP project ID
-  region  = "us-central1"       # Adjust the region as needed
-  zone    = "us-central1-a"     # Adjust the zone as needed
+  project = "gcp-ci-cd-project" 
+  region  = "us-central1"       
+  zone    = "us-central1-a"     
 }
 
 # Create a Service Account for GKE
@@ -29,9 +29,9 @@ resource "google_service_account" "gke_service_account" {
 # Assign Roles to the Service Account
 resource "google_project_iam_member" "gke_service_account_roles" {
   for_each = toset([
-    "roles/container.admin",        # Required for GKE management
-    "roles/compute.networkAdmin",  # Required for network operations
-    "roles/storage.admin",         # Optional, for Cloud Storage
+    "roles/container.admin",        
+    "roles/compute.networkAdmin",  
+    "roles/storage.admin",         
   ])
 
   project = "gcp-ci-cd-project"
@@ -97,7 +97,7 @@ resource "google_container_cluster" "primary" {
     ]
   }
 
-  initial_node_count = 2 # Adjust as needed
+  initial_node_count = 2
 }
 
 # Create a Cloud Storage Bucket
